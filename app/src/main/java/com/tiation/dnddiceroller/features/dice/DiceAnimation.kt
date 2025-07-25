@@ -6,7 +6,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.tiation.dnddiceroller.performance.PerformanceMonitor
 import kotlinx.coroutines.launch
 
 @Composable
@@ -17,7 +20,13 @@ fun DiceAnimation(
     modifier: Modifier = Modifier
 ) {
     val haptic = LocalHapticFeedback.current
+    val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    
+    // Performance monitoring
+    val performanceMonitor = remember {
+        PerformanceMonitor(context, FirebaseAnalytics.getInstance(context))
+    }
     
     // Animation values
     val rotation = remember { Animatable(0f) }
@@ -26,46 +35,55 @@ fun DiceAnimation(
     
     LaunchedEffect(isRolling) {
         if (isRolling) {
+            val animationStartTime = System.currentTimeMillis()
+            
             // Play haptic feedback
             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
             
-            // Animate the dice
+            // Animate the dice with optimized parameters
             scope.launch {
-                // Bounce and rotate animation
+                // Reduced animation duration and complexity for better performance
                 parallel {
                     launch {
                         rotation.animateTo(
-                            targetValue = 720f, // 2 full rotations
-                            animationSpec = tween(800, easing = FastOutSlowInEasing)
+                            targetValue = 360f, // Reduced rotation for better performance
+                            animationSpec = tween(600, easing = FastOutSlowInEasing)
                         )
                     }
                     launch {
                         scale.animateTo(
-                            targetValue = 0.8f,
-                            animationSpec = tween(400)
+                            targetValue = 0.85f, // Less extreme scaling
+                            animationSpec = tween(300)
                         )
                         scale.animateTo(
                             targetValue = 1f,
                             animationSpec = spring(
                                 dampingRatio = Spring.DampingRatioMediumBouncy,
-                                stiffness = Spring.StiffnessLow
+                                stiffness = Spring.StiffnessMedium // Increased stiffness for performance
                             )
                         )
                     }
                     launch {
                         offsetY.animateTo(
-                            targetValue = -50f,
-                            animationSpec = tween(400)
+                            targetValue = -30f, // Reduced bounce height
+                            animationSpec = tween(300)
                         )
                         offsetY.animateTo(
                             targetValue = 0f,
                             animationSpec = spring(
                                 dampingRatio = Spring.DampingRatioMediumBouncy,
-                                stiffness = Spring.StiffnessLow
+                                stiffness = Spring.StiffnessMedium
                             )
                         )
                     }
                 }
+                
+                // Track animation performance
+                val animationDuration = System.currentTimeMillis() - animationStartTime
+                performanceMonitor.trackAnimation(
+                    animationType = "dice_roll_${diceType.name.lowercase()}",
+                    duration = animationDuration
+                )
                 
                 // Reset values
                 rotation.snapTo(0f)
