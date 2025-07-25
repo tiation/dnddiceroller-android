@@ -142,11 +142,21 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x ./gradlew
       
+    - name: Enable Compose Metrics
+      run: |
+        echo "composeCompilerReports=true" >> gradle.properties
+        echo "composeCompilerMetrics=true" >> gradle.properties
+        
     - name: Build debug APK
       run: ./gradlew assembleDebug
       
     - name: Build release APK
       run: ./gradlew assembleRelease
+      
+    - name: Analyze Compose Metrics
+      run: |
+        echo "Compose Compiler Metrics:"
+        find . -name "compose_metrics.txt" -exec cat {} \;
       
     - name: Upload debug APK
       uses: actions/upload-artifact@v3
