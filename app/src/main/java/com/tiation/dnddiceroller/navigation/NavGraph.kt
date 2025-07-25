@@ -49,7 +49,8 @@ fun DiceRollerNavGraph(
                 rollHistory = rollHistory,
                 onNavigateBack = {
                     navController.navigateUp()
-                }
+                },
+                navController = navController
             )
         }
         

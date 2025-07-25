@@ -5,19 +5,23 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.tiation.dnddiceroller.DiceRoll
+import com.tiation.dnddiceroller.navigation.Destinations
 
 /**
  * Screen that displays the history of all dice rolls
  * 
  * @param rollHistory List of dice rolls to display
  * @param onNavigateBack Callback to handle back navigation
+ * @param navController NavController for navigating to statistics screen
  * 
  * Built by Garrett Dillman (garrett@sxc.codes) & Tia (tiatheone@protonmail.com)
  */
@@ -25,7 +29,8 @@ import com.tiation.dnddiceroller.DiceRoll
 @Composable
 fun RollHistoryScreen(
     rollHistory: List<DiceRoll>,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    navController: NavController? = null
 ) {
     Scaffold(
         topBar = {
@@ -40,8 +45,32 @@ fun RollHistoryScreen(
                             contentDescription = "Back"
                         )
                     }
+                },
+                actions = {
+                    // Statistics button
+                    IconButton(
+                        onClick = { navController?.navigate(Destinations.Statistics.route) }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.BarChart,
+                            contentDescription = "Statistics"
+                        )
+                    }
                 }
             )
+        },
+        floatingActionButton = {
+            // Alternative FAB for Statistics
+            if (rollHistory.isNotEmpty()) {
+                FloatingActionButton(
+                    onClick = { navController?.navigate(Destinations.Statistics.route) }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.BarChart,
+                        contentDescription = "View Statistics"
+                    )
+                }
+            }
         }
     ) { paddingValues ->
         Column(
