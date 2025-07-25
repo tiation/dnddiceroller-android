@@ -10,14 +10,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.tiation.dnddiceroller.DiceEngine
-import com.tiation.dnddiceroller.RollLogger
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.tiation.dnddiceroller.features.general.GeneralDiceRollerViewModel
 
 @Composable
 fun GeneralDiceRollerScreen(
-    diceEngine: DiceEngine,
-    rollLogger: RollLogger,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: GeneralDiceRollerViewModel = hiltViewModel()
 ) {
     Column(
         modifier = modifier
@@ -38,8 +37,7 @@ fun GeneralDiceRollerScreen(
             items(standardDice) { sides ->
                 Button(
                     onClick = {
-                        val result = diceEngine.rollDie(sides)
-                        rollLogger.logRoll("d$sides", result)
+                        viewModel.rollStandardDie(sides)
                     },
                     modifier = Modifier
                         .aspectRatio(1f)
@@ -85,8 +83,7 @@ fun GeneralDiceRollerScreen(
                 
                 Button(
                     onClick = {
-                        val result = diceEngine.rollDie(customSides)
-                        rollLogger.logRoll("d$customSides", result)
+                        viewModel.rollCustomDie(customSides)
                     }
                 ) {
                     Text("Roll")

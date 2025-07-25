@@ -15,10 +15,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
+import com.tiation.dnddiceroller.features.role.RoleSelectionViewModel
 import com.tiation.dnddiceroller.navigation.DiceRollerNavGraph
+import com.tiation.dnddiceroller.navigation.NavDestinations
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.random.Random
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,19 +42,32 @@ class MainActivity : ComponentActivity() {
 
 /**
  * Main navigation root composable that creates nav controller and manages shared state
+ * Checks if user has selected a role and navigates accordingly
  * Built by Garrett Dillman (garrett@sxc.codes) & Tia (tiatheone@protonmail.com)
  */
 @Composable
 fun DiceRollerNavRoot() {
     val navController = rememberNavController()
     var rollHistory by remember { mutableStateOf(emptyList<DiceRoll>()) }
+    val roleViewModel: RoleSelectionViewModel = hiltViewModel()
+    
+    // Observe the user role to determine start destination
+    val userRole by roleViewModel.userRole.collectAsState(initial = null)
+    
+    // Determine start destination based on whether user has selected a role
+    val startDestination = if (userRole != null) {
+        NavDestinations.DiceRoller.route
+    } else {
+        NavDestinations.RoleSelection.route
+    }
     
     DiceRollerNavGraph(
         navController = navController,
         rollHistory = rollHistory,
         onRollHistoryUpdate = { newHistory ->
             rollHistory = newHistory
-        }
+        },
+        startDestination = startDestination
     )
 }
 

@@ -1,8 +1,6 @@
 package com.tiation.dnddiceroller.ui.screens
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material3.*
@@ -13,9 +11,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.tiation.dnddiceroller.ui.components.*
 import com.tiation.dnddiceroller.ui.theme.DiceRollerTheme
-import com.tiation.dnddiceroller.ui.theme.LocalDiceRollerCustomTheme
-import com.tiation.dnddiceroller.DiceEngine
-import com.tiation.dnddiceroller.RollLogger
 import com.tiation.dnddiceroller.navigation.Destinations
 
 @Composable
@@ -76,14 +71,7 @@ fun MainScreen(
                 }
 
                 // Render General Dice Roller Screen
-                val diceEngine = DiceEngine()
-                val rollLogger = RollLogger { result, diceType ->
-                    rollResults = listOf(result to diceType) + rollResults
-                }
-                
                 GeneralDiceRollerScreen(
-                    diceEngine = diceEngine,
-                    rollLogger = rollLogger,
                     modifier = Modifier.weight(1f)
                 )
 

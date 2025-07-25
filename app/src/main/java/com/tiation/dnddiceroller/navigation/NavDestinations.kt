@@ -8,6 +8,11 @@ package com.tiation.dnddiceroller.navigation
  */
 sealed class NavDestinations(val route: String) {
     /**
+     * Role selection screen - choose between Player and Dungeon Master
+     */
+    object RoleSelection : NavDestinations("role_selection")
+    
+    /**
      * Main dice roller screen - the primary screen of the app
      */
     object DiceRoller : NavDestinations("dice_roller")
