@@ -11,6 +11,8 @@ import androidx.compose.ui.unit.dp
 import com.tiation.dnddiceroller.ui.components.*
 import com.tiation.dnddiceroller.ui.theme.DiceRollerTheme
 import com.tiation.dnddiceroller.ui.theme.LocalDiceRollerCustomTheme
+import com.tiation.dnddiceroller.DiceEngine
+import com.tiation.dnddiceroller.RollLogger
 
 @Composable
 fun MainScreen() {
@@ -59,59 +61,17 @@ fun MainScreen() {
                     }
                 }
 
-                // Dice Buttons
-                val diceTypes = if (isDMMode) {
-                    listOf("D4", "D6", "D8", "D10", "D12", "D20", "D100")
-                } else {
-                    listOf("D20", "D6", "D8", "D10")
+                // Render General Dice Roller Screen
+                val diceEngine = DiceEngine()
+                val rollLogger = RollLogger { result, diceType ->
+                    rollResults = listOf(result to diceType) + rollResults
                 }
-
-                LazyColumn(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    item {
-                        // Dice Grid
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            diceTypes.chunked(3).forEach { rowDice ->
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceEvenly
-                                ) {
-                                    rowDice.forEach { diceType ->
-                                        DiceButton(
-                                            diceType = diceType,
-                                            onClick = {
-                                                val max = diceType.removePrefix("D").toInt()
-                                                val result = (1..max).random()
-                                                rollResults = listOf(result to diceType) + rollResults
-                                            },
-                                            modifier = Modifier.weight(1f).padding(horizontal = 4.dp)
-                                        )
-                                    }
-                                    // Fill empty slots with spacers for alignment
-                                    repeat(3 - rowDice.size) {
-                                        Spacer(modifier = Modifier.weight(1f))
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    // Roll Results
-                    items(rollResults) { (result, diceType) ->
-                        RollResult(
-                            result = result,
-                            diceType = diceType,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    }
-                }
+                
+                GeneralDiceRollerScreen(
+                    diceEngine = diceEngine,
+                    rollLogger = rollLogger,
+                    modifier = Modifier.weight(1f)
+                )
 
                 // DM Mode Special Features
                 if (isDMMode) {
