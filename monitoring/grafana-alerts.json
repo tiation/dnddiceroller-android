@@ -1,0 +1,181 @@
+{
+  "alerts": [
+    {
+      "id": 1,
+      "uid": "memory_usage_alert",
+      "title": "High Memory Usage Alert",
+      "condition": "memory_usage_condition",
+      "data": [
+        {
+          "refId": "A",
+          "queryType": "",
+          "relativeTimeRange": {
+            "from": 600,
+            "to": 0
+          },
+          "model": {
+            "expr": "memory_usage_percent > 85",
+            "interval": "",
+            "refId": "A"
+          }
+        }
+      ],
+      "intervalSeconds": 60,
+      "noDataState": "NoData",
+      "execErrState": "Alerting",
+      "for": "5m",
+      "annotations": {
+        "description": "Memory usage has exceeded 85% for more than 5 minutes",
+        "runbook_url": "https://docs.example.com/memory-runbook",
+        "summary": "High memory usage detected in DnD Dice Roller Android app"
+      },
+      "labels": {
+        "team": "mobile",
+        "severity": "warning",
+        "app": "dnddiceroller-android"
+      }
+    },
+    {
+      "id": 2,
+      "uid": "animation_performance_alert",
+      "title": "Slow Animation Performance Alert",
+      "condition": "animation_performance_condition",
+      "data": [
+        {
+          "refId": "B",
+          "queryType": "",
+          "relativeTimeRange": {
+            "from": 300,
+            "to": 0
+          },
+          "model": {
+            "expr": "avg(animation_duration_ms) > 1000",
+            "interval": "",
+            "refId": "B"
+          }
+        }
+      ],
+      "intervalSeconds": 60,
+      "noDataState": "NoData",
+      "execErrState": "Alerting",
+      "for": "2m",
+      "annotations": {
+        "description": "Animation performance has degraded with average duration > 1000ms",
+        "runbook_url": "https://docs.example.com/animation-runbook",
+        "summary": "Slow animation performance detected"
+      },
+      "labels": {
+        "team": "mobile",
+        "severity": "critical",
+        "app": "dnddiceroller-android"
+      }
+    },
+    {
+      "id": 3,
+      "uid": "app_crash_alert",
+      "title": "App Crash Rate Alert",
+      "condition": "crash_rate_condition",
+      "data": [
+        {
+          "refId": "C",
+          "queryType": "",
+          "relativeTimeRange": {
+            "from": 3600,
+            "to": 0
+          },
+          "model": {
+            "expr": "sum(app_crashes) > 5",
+            "interval": "",
+            "refId": "C"
+          }
+        }
+      ],
+      "intervalSeconds": 300,
+      "noDataState": "NoData",
+      "execErrState": "Alerting",
+      "for": "1m",
+      "annotations": {
+        "description": "More than 5 app crashes detected in the last hour",
+        "runbook_url": "https://docs.example.com/crash-runbook",
+        "summary": "High crash rate detected"
+      },
+      "labels": {
+        "team": "mobile",
+        "severity": "critical",
+        "app": "dnddiceroller-android"
+      }
+    },
+    {
+      "id": 4,
+      "uid": "battery_usage_alert",
+      "title": "High Battery Usage Alert",
+      "condition": "battery_usage_condition",
+      "data": [
+        {
+          "refId": "D",
+          "queryType": "",
+          "relativeTimeRange": {
+            "from": 1800,
+            "to": 0
+          },
+          "model": {
+            "expr": "battery_drain_rate > 10",
+            "interval": "",
+            "refId": "D"
+          }
+        }
+      ],
+      "intervalSeconds": 300,
+      "noDataState": "NoData",
+      "execErrState": "Alerting",
+      "for": "10m",
+      "annotations": {
+        "description": "App is consuming battery at a rate > 10% per 30 minutes",
+        "runbook_url": "https://docs.example.com/battery-runbook",
+        "summary": "High battery usage detected"
+      },
+      "labels": {
+        "team": "mobile",
+        "severity": "warning",
+        "app": "dnddiceroller-android"
+      }
+    }
+  ],
+  "notification_policies": [
+    {
+      "receiver": "mobile-team-email",
+      "group_by": ["alertname", "severity"],
+      "group_wait": "10s",
+      "group_interval": "5m",
+      "repeat_interval": "1h",
+      "matchers": [
+        {
+          "name": "team",
+          "value": "mobile"
+        }
+      ]
+    }
+  ],
+  "receivers": [
+    {
+      "name": "mobile-team-email",
+      "email_configs": [
+        {
+          "to": "tiatheone@protonmail.com",
+          "subject": "[DnD Dice Roller] {{ .GroupLabels.alertname }} - {{ .GroupLabels.severity }}",
+          "body": "{{ range .Alerts }}Alert: {{ .Annotations.summary }}\nDescription: {{ .Annotations.description }}\nRunbook: {{ .Annotations.runbook_url }}{{ end }}"
+        },
+        {
+          "to": "garrett@sxc.codes",
+          "subject": "[DnD Dice Roller] {{ .GroupLabels.alertname }} - {{ .GroupLabels.severity }}",
+          "body": "{{ range .Alerts }}Alert: {{ .Annotations.summary }}\nDescription: {{ .Annotations.description }}\nRunbook: {{ .Annotations.runbook_url }}{{ end }}"
+        },
+        {
+          "to": "garrett.dillman@gmail.com",
+          "subject": "[DnD Dice Roller] {{ .GroupLabels.alertname }} - {{ .GroupLabels.severity }}",
+          "body": "{{ range .Alerts }}Alert: {{ .Annotations.summary }}\nDescription: {{ .Annotations.description }}\nRunbook: {{ .Annotations.runbook_url }}{{ end }}"
+        }
+      ]
+    }
+  ]
+}

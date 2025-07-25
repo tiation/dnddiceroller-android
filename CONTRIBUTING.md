@@ -18,7 +18,7 @@ We welcome contributions of all kinds:
 
 1. **Development Environment**
    - Android Studio Iguana | 2023.2.1 or later
-   - JDK 8 or later
+   - JDK 17 or later
    - Git
 
 2. **Fork and Clone**
@@ -31,6 +31,7 @@ We welcome contributions of all kinds:
    ```bash
    ./gradlew build
    ./gradlew test
+   ./gradlew connectedAndroidTest
    ```
 
 ### Development Workflow

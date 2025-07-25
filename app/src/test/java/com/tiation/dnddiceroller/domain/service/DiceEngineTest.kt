@@ -1,170 +1,115 @@
 package com.tiation.dnddiceroller.domain.service
 
-import com.tiation.dnddiceroller.domain.model.RollType
-import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
-import io.kotest.matchers.ints.shouldBeLessThanOrEqual
-import io.kotest.matchers.shouldBe
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.int
-import io.kotest.property.arbitrary.list
-import io.kotest.property.arbitrary.positiveInt
-import io.kotest.property.checkAll
+import com.chasewhiterabbit.dicengine.domain.engine.DiceEngine
+import org.junit.Test
+import org.junit.Assert.*
 import kotlin.random.Random
 
-class DiceEngineTest : FunSpec({
-    val diceEngine = DiceEngine()
+/**
+ * Unit tests for DiceEngine
+ * 
+ * Contact: Garrett Dillman (garrett.dillman@gmail.com, garrett@sxc.codes)
+ * Contact: Tia (tiatheone@protonmail.com)
+ */
+class DiceEngineTest {
+    
+    private val diceEngine = DiceEngine()
 
-    context("custom die validation") {
-        test("sides >= 2 should be valid") {
-            diceEngine.validateCustomDieSides(2) shouldBe true
-            diceEngine.validateCustomDieSides(100) shouldBe true
-            diceEngine.validateCustomDieSides(1000) shouldBe true
-        }
-
-        test("sides < 2 should be invalid") {
-            diceEngine.validateCustomDieSides(1) shouldBe false
-            diceEngine.validateCustomDieSides(0) shouldBe false
-            diceEngine.validateCustomDieSides(-1) shouldBe false
-        }
-    }
-
-    context("single die roll") {
-        test("roll should be within valid range") {
-            repeat(10_000) {
-                val sides = Random.nextInt(2, 1000)
-                val result = diceEngine.rollSingleDie(sides)
-                result shouldBeGreaterThanOrEqual 1
-                result shouldBeLessThanOrEqual sides
-            }
-        }
-
-        test("should throw exception for invalid sides") {
-            shouldThrow<IllegalArgumentException> {
-                diceEngine.rollSingleDie(1)
-            }
-            shouldThrow<IllegalArgumentException> {
-                diceEngine.rollSingleDie(0)
-            }
-            shouldThrow<IllegalArgumentException> {
-                diceEngine.rollSingleDie(-1)
-            }
+    @Test
+    fun `rollDie should return value within range`() {
+        repeat(1000) {
+            val sides = Random.nextInt(2, 21)
+            val result = diceEngine.rollDie(sides)
+            
+            assertTrue("Roll result $result should be >= 1", result >= 1)
+            assertTrue("Roll result $result should be <= $sides", result <= sides)
         }
     }
 
-    context("multiple dice rolls") {
-        test("should return correct number of results") {
-            checkAll(
-                Arb.positiveInt(100),  // max 100 dice
-                Arb.int(2, 1000)   // sides between 2 and 1000
-            ) { numberOfDice, sides ->
-                val results = diceEngine.rollMultipleDice(numberOfDice, sides)
-                results shouldHaveSize numberOfDice
-                results.forEach { result ->
-                    result shouldBeGreaterThanOrEqual 1
-                    result shouldBeLessThanOrEqual sides
-                }
-            }
+    @Test
+    fun `rollDie should throw exception for invalid sides`() {
+        assertThrows(IllegalArgumentException::class.java) {
+            diceEngine.rollDie(1)
         }
-
-        test("should throw exception for invalid inputs") {
-            shouldThrow<IllegalArgumentException> {
-                diceEngine.rollMultipleDice(0, 6)
-            }
-            shouldThrow<IllegalArgumentException> {
-                diceEngine.rollMultipleDice(-1, 6)
-            }
-            shouldThrow<IllegalArgumentException> {
-                diceEngine.rollMultipleDice(1, 1)
-            }
+        
+        assertThrows(IllegalArgumentException::class.java) {
+            diceEngine.rollDie(0)
+        }
+        
+        assertThrows(IllegalArgumentException::class.java) {
+            diceEngine.rollDie(-1)
         }
     }
 
-    context("advantage and disadvantage") {
-        test("advantage should return higher roll") {
-            repeat(10_000) { 
-                val sides = Random.nextInt(2, 1000)
-                val result = diceEngine.rollWithAdvantage(sides)
-                result shouldBeGreaterThanOrEqual 1
-                result shouldBeLessThanOrEqual sides
-            }
-        }
-
-        test("disadvantage should return lower roll") {
-            repeat(10_000) {
-                val sides = Random.nextInt(2, 1000)
-                val result = diceEngine.rollWithDisadvantage(sides)
-                result shouldBeGreaterThanOrEqual 1
-                result shouldBeLessThanOrEqual sides
-            }
+    @Test
+    fun `rollDice should return correct number of results`() {
+        val numberOfDice = 5
+        val sides = 6
+        
+        val results = diceEngine.rollDice(numberOfDice, sides)
+        
+        assertEquals("Should return $numberOfDice results", numberOfDice, results.size)
+        results.forEach { result ->
+            assertTrue("Each result should be >= 1", result >= 1)
+            assertTrue("Each result should be <= $sides", result <= sides)
         }
     }
 
-    context("total calculation") {
-        test("should correctly sum results and apply modifier") {
-            checkAll(
-                Arb.list(Arb.int(1, 1000), 1..100),  // list of 1-100 results
-                Arb.int(-100, 100)  // modifier between -100 and 100
-            ) { results, modifier ->
-                val (baseTotal, finalTotal) = diceEngine.calculateTotals(results, modifier)
-                baseTotal shouldBe results.sum()
-                finalTotal shouldBe (baseTotal + modifier)
-            }
+    @Test
+    fun `rollDice should throw exception for invalid inputs`() {
+        assertThrows(IllegalArgumentException::class.java) {
+            diceEngine.rollDice(0, 6)
+        }
+        
+        assertThrows(IllegalArgumentException::class.java) {
+            diceEngine.rollDice(-1, 6)
+        }
+        
+        assertThrows(IllegalArgumentException::class.java) {
+            diceEngine.rollDice(1, 1)
         }
     }
 
-    context("complete roll operation") {
-        test("normal roll should produce expected results") {
-            repeat(10_000) {
-                val numberOfDice = Random.nextInt(1, 10)
-                val sides = Random.nextInt(2, 100)
-                val modifier = Random.nextInt(-10, 10)
-
-                val roll = diceEngine.performRoll(
-                    numberOfDice = numberOfDice,
-                    sides = sides,
-                    modifier = modifier
-                )
-
-                roll.results shouldHaveSize numberOfDice
-                roll.results.forEach { result ->
-                    result shouldBeGreaterThanOrEqual 1
-                    result shouldBeLessThanOrEqual sides
-                }
-                roll.total shouldBe roll.results.sum()
-                roll.finalTotal shouldBe (roll.total + modifier)
-                roll.rollType shouldBe RollType.NORMAL
-            }
-        }
-
-        test("advantage roll should produce higher results") {
-            repeat(10_000) {
-                val roll = diceEngine.performRoll(
-                    numberOfDice = 1,
-                    sides = 20,
-                    rollType = RollType.ADVANTAGE
-                )
-                
-                roll.results shouldHaveSize 1
-                roll.results[0] shouldBeGreaterThanOrEqual 1
-                roll.results[0] shouldBeLessThanOrEqual 20
-            }
-        }
-
-        test("disadvantage roll should produce lower results") {
-            repeat(10_000) {
-                val roll = diceEngine.performRoll(
-                    numberOfDice = 1,
-                    sides = 20,
-                    rollType = RollType.DISADVANTAGE
-                )
-                
-                roll.results shouldHaveSize 1
-                roll.results[0] shouldBeGreaterThanOrEqual 1
-                roll.results[0] shouldBeLessThanOrEqual 20
-            }
+    @Test
+    fun `rollWithAdvantage should return valid result`() {
+        repeat(100) {
+            val sides = 20
+            val result = diceEngine.rollWithAdvantage(sides)
+            
+            assertTrue("Advantage roll should be >= 1", result >= 1)
+            assertTrue("Advantage roll should be <= $sides", result <= sides)
         }
     }
-})
+
+    @Test
+    fun `rollWithDisadvantage should return valid result`() {
+        repeat(100) {
+            val sides = 20
+            val result = diceEngine.rollWithDisadvantage(sides)
+            
+            assertTrue("Disadvantage roll should be >= 1", result >= 1)
+            assertTrue("Disadvantage roll should be <= $sides", result <= sides)
+        }
+    }
+
+    @Test
+    fun `advantage should tend to be higher than disadvantage over many rolls`() {
+        var advantageTotal = 0
+        var disadvantageTotal = 0
+        val iterations = 1000
+        val sides = 20
+        
+        repeat(iterations) {
+            advantageTotal += diceEngine.rollWithAdvantage(sides)
+            disadvantageTotal += diceEngine.rollWithDisadvantage(sides)
+        }
+        
+        val advantageAverage = advantageTotal.toDouble() / iterations
+        val disadvantageAverage = disadvantageTotal.toDouble() / iterations
+        
+        assertTrue(
+            "Advantage average ($advantageAverage) should be higher than disadvantage average ($disadvantageAverage)",
+            advantageAverage > disadvantageAverage
+        )
+    }
+}

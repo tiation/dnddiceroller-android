@@ -1,0 +1,108 @@
+/**
+ * Test coverage configuration for DnD Dice Roller
+ * 
+ * Provides comprehensive test coverage reporting for:
+ * - Unit tests
+ * - Integration tests  
+ * - UI tests
+ * - Combined coverage reports
+ * 
+ * Contact: Garrett Dillman (garrett.dillman@gmail.com, garrett@sxc.codes)
+ * Contact: Tia (tiatheone@protonmail.com)
+ */
+
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+android {
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+    }
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports for the debug build"
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        csv.enabled = false
+    }
+
+    def fileFilter = [
+        '**/R.class',
+        '**/R$*.class',
+        '**/BuildConfig.*',
+        '**/Manifest*.*',
+        '**/*Test*.*',
+        '**/*\$Lambda$*.*',
+        '**/*\$inlined$*.*',
+        '**/kotlin/jvm/internal/**',
+        '**/Hilt_*',
+        '**/*_HiltModules*',
+        '**/*_Provide*Factory*',
+        '**/*_MembersInjector*',
+        '**/DaggerHiltApplicationComponent*',
+        '**/*Activity*',
+        '**/*Fragment*',
+        '**/*Application*',
+        '**/di/**'
+    ]
+
+    def debugTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.from = files([mainSrc])
+    classDirectories.from = files([debugTree])
+    executionData.from = fileTree(dir: "$buildDir", includes: [
+        "jacoco/testDebugUnitTest.exec",
+        "outputs/code_coverage/debugAndroidTest/connected/**/*.ec"
+    ])
+}
+
+task coverageReport(dependsOn: 'jacocoTestReport') {
+    group = "Reporting"
+    description = "Generate complete test coverage report"
+    
+    doLast {
+        println("================================================================================")
+        println("Test Coverage Report Generated")
+        println("================================================================================")
+        println("HTML Report: ${buildDir}/reports/jacoco/jacocoTestReport/html/index.html")
+        println("XML Report:  ${buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
+        println("================================================================================")
+        println("Coverage Goals:")
+        println("- Minimum 80% line coverage")
+        println("- Critical path testing: 100%")
+        println("- Edge case validation: 95%")
+        println("================================================================================")
+    }
+}
+
+task testAll(dependsOn: ['test', 'connectedAndroidTest']) {
+    group = "Verification"
+    description = "Run all tests (unit, integration, and UI tests)"
+    
+    doLast {
+        println("================================================================================")
+        println("All Tests Completed")
+        println("================================================================================")
+        println("Unit Tests:        ✓ Completed")
+        println("Integration Tests: ✓ Completed") 
+        println("UI Tests:          ✓ Completed")
+        println("================================================================================")
+        println("Next: Run './gradlew coverageReport' to generate coverage report")
+        println("================================================================================")
+    }
+}

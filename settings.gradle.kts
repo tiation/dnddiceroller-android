@@ -17,8 +17,6 @@ dependencyResolutionManagement {
 rootProject.name = "DnDDiceRoller"
 
 include(":app")
-// Temporarily excluded to get basic app working
-// include(":domain")
-// include(":data")
-// include(":core-ui")
-// include(":common-test")
+include(":domain")
+include(":data")
+include(":core-ui")
