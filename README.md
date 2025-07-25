@@ -1,288 +1,159 @@
-# dnddiceroller-android
+# D&D Dice Roller - Android
 
-<div align="center">
+[![Build Status](https://img.shields.io/github/actions/workflow/status/tiation/dnddiceroller-android/ci.yml?branch=main)](https://github.com/tiation/dnddiceroller-android/actions)
+[![API](https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=24)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Code Style](https://img.shields.io/badge/code%20style-ktlint-FF4081.svg)](https://ktlint.github.io/)
 
-![dnddiceroller-android Banner](https://img.shields.io/badge/🔮_TIATION_ECOSYSTEM-dnddiceroller-android-00FFFF?style=for-the-badge&labelColor=0A0A0A&color=00FFFF)
+A modern, enterprise-grade Android application for rolling dice in Dungeons & Dragons campaigns. Built with Jetpack Compose, following Clean Architecture principles and modern Android development best practices.
 
-**Enterprise-grade solution: dnddiceroller-android**
+## 🎯 Features
 
-*Professional • Scalable • Mission-Driven*
-
-[![🌐_Live_Demo](https://img.shields.io/badge/🌐_Live_Demo-View_Project-00FFFF?style=flat-square&labelColor=0A0A0A)](https://tiation.github.io/dnddiceroller-android)
-[![📚_Documentation](https://img.shields.io/badge/📚_Documentation-Complete-007FFF?style=flat-square&labelColor=0A0A0A)](https://tiation.github.io/dnddiceroller-android)
-[![🏗️_Architecture](https://img.shields.io/badge/🏗️_Architecture-Diagram-FF00FF?style=flat-square&labelColor=0A0A0A)](https://tiation.github.io/dnddiceroller-android/architecture)
-[![⚡_Status](https://img.shields.io/badge/⚡_Status-Active Development-FF00FF?style=flat-square&labelColor=0A0A0A)](https://github.com/tiation/dnddiceroller-android)
-[![📄_License](https://img.shields.io/badge/📄_License-MIT-00FFFF?style=flat-square&labelColor=0A0A0A)](https://github.com/tiation/dnddiceroller-android/blob/main/LICENSE)
-
-</div>
-
-## 🚀 Overview
-
-Enterprise-grade solution: dnddiceroller-android
-
-### ✨ Key Features
-
-- 🎯 **Feature 1** - Description 1
-- 🔧 **Feature 2** - Description 2
-- 🌟 **Feature 3** - Description 3
-- 🛡️ **Feature 4** - Description 4
-
----
+- **Dice Rolling Engine**: Roll standard D&D dice (d4, d6, d8, d10, d12, d20, d100)
+- **Custom Dice Sets**: Create and save custom dice combinations
+- **Roll History**: Track and review previous rolls
+- **Campaign Management**: Organize dice sets by campaign
+- **Offline Support**: Full functionality without internet connection
+- **Accessibility**: Comprehensive support for screen readers and assistive technologies
+- **Material Design 3**: Modern UI following Google's latest design guidelines
 
 ## 🏗️ Architecture
 
-![Architecture Diagram](assets/architecture/dnddiceroller-android-architecture.svg)
+This project follows **Clean Architecture** principles with a modular structure:
 
-### System Components
-
-```mermaid
-graph TB
-    A[Component 1] --> B[Component 2]
-    B --> C[Component 3]
-    C --> D[Component 4]
-    
-    style A fill:#00ffff,stroke:#ff00ff,stroke-width:2px
-    style B fill:#ff00ff,stroke:#00ffff,stroke-width:2px
-    style C fill:#00ffff,stroke:#ff00ff,stroke-width:2px
-    style D fill:#ff00ff,stroke:#00ffff,stroke-width:2px
+```
+dnddiceroller-android/
+├── app/                    # Presentation layer (Activities, Fragments, ViewModels)
+├── domain/                 # Business logic and use cases (pure Kotlin)
+├── data/                   # Data layer (Room database, repositories)
+├── core-ui/                # Design system and reusable UI components
+├── common-test/            # Shared test utilities and fixtures
+└── docs/                   # Architecture documentation
 ```
 
 ### Technology Stack
 
-- **Frontend**: Modern Frontend
-- **Backend**: Scalable Backend
-- **Database**: Database
-- **Infrastructure**: Infrastructure
+- **UI**: Jetpack Compose with Material Design 3
+- **Architecture**: MVVM with Clean Architecture
+- **Dependency Injection**: Hilt
+- **Database**: Room with coroutines support
+- **Async**: Kotlin Coroutines and Flow
+- **Testing**: JUnit, MockK, Turbine, Compose Testing
+- **Build**: Gradle with Kotlin DSL and Version Catalogs
 
----
-
-## 📋 Table of Contents
-
-- [Features](#-features)
-- [Quick Start](#-quick-start)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [Documentation](#-documentation)
-- [Screenshots](#-screenshots)
-- [FAQ](#-faq)
-- [Contributing](#-contributing)
-- [Support](#-support)
-- [License](#-license)
-- [About Tiation](#-about-tiation)
-
----
-
-## ✨ Features
-
-{{FEATURES_LIST}}
-
----
-
-## 🏃‍♂️ Quick Start
-
-```bash
-# Clone the repository
-git clone https://github.com/tiation/dnddiceroller-android.git
-cd dnddiceroller-android
-
-# Install dependencies
-{{INSTALL_COMMANDS}}
-
-# Run the application
-{{RUN_COMMANDS}}
-```
-
----
-
-## 📦 Installation
+## 🚀 Getting Started
 
 ### Prerequisites
 
-{{PREREQUISITES}}
+- Android Studio Iguana | 2023.2.1 or later
+- JDK 8 or later
+- Android SDK with API level 24+
 
-### Installation Steps
+### Setup
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/tiation/dnddiceroller-android.git
+   git clone git@github.com:tiation/dnddiceroller-android.git
    cd dnddiceroller-android
    ```
 
-2. **Install dependencies**
+2. **Open in Android Studio**
+   - Launch Android Studio
+   - Select "Open an existing project"
+   - Navigate to the cloned directory
+
+3. **Build the project**
    ```bash
-   {{DETAILED_INSTALL_COMMANDS}}
+   ./gradlew build
    ```
 
-3. **Configuration**
+4. **Run tests**
    ```bash
-   {{CONFIG_COMMANDS}}
+   ./gradlew test
    ```
 
----
+### Development Workflow
 
-## 🎯 Usage
+We follow GitFlow branching strategy:
+- `main` - Production releases
+- `develop` - Development integration
+- `feature/*` - Feature development
+- `release/*` - Release preparation
+- `hotfix/*` - Critical fixes
 
-### Basic Usage
+## 📱 Screenshots
 
-{{BASIC_USAGE}}
+*Coming soon*
 
-### Advanced Usage
+## 🧪 Testing
 
-{{ADVANCED_USAGE}}
+The project maintains high test coverage across all layers:
 
-### Examples
+- **Unit Tests**: Domain logic and ViewModels
+- **Integration Tests**: Repository and database operations
+- **UI Tests**: Compose UI components and user flows
 
-{{USAGE_EXAMPLES}}
+Run all tests:
+```bash
+./gradlew test
+./gradlew connectedAndroidTest
+```
 
----
+## 📖 Documentation
 
-## 📚 Documentation
-
-- **[User Guide](docs/user-guide.md)** - Complete user documentation
-- **[API Reference](docs/api-reference.md)** - Technical API documentation
-- **[Architecture](docs/architecture.md)** - System architecture overview
-- **[Deployment Guide](docs/deployment.md)** - Production deployment instructions
-- **[Developer Guide](docs/developer-guide.md)** - Development setup and guidelines
-
-### Live Documentation
-
-Visit our [GitHub Pages site](https://tiation.github.io/dnddiceroller-android) for interactive documentation.
-
----
-
-## 📸 Screenshots
-
-<div align="center">
-  <img src="assets/screenshots/main-interface.png" alt="Main Interface" width="800">
-  <p><em>Main application interface</em></p>
-</div>
-
-<div align="center">
-  <img src="assets/screenshots/dashboard.png" alt="Dashboard" width="800">
-  <p><em>Analytics dashboard</em></p>
-</div>
-
----
-
-## ❓ FAQ
-
-### General Questions
-
-**Q: What makes this solution enterprise-grade?**
-A: Our solution includes comprehensive security, scalability, monitoring, and enterprise integration features with professional support.
-
-**Q: Is this compatible with existing systems?**
-A: Yes, we provide extensive API and integration capabilities for seamless system integration.
-
-**Q: What support options are available?**
-A: We offer community support through GitHub Issues and professional enterprise support for commercial users.
-
-### Technical Questions
-
-**Q: What are the system requirements?**
-A: {{SYSTEM_REQUIREMENTS}}
-
-**Q: How do I handle large scale deployments?**
-A: See our [Deployment Guide](docs/deployment.md) for enterprise-scale deployment strategies.
-
-**Q: Are there any security considerations?**
-A: Yes, please review our [Security Guide](docs/security.md) for comprehensive security best practices.
-
-### Troubleshooting
-
-**Q: Common installation issues**
-A: Check our [Troubleshooting Guide](docs/troubleshooting.md) for solutions to common problems.
-
-**Q: Performance optimization**
-A: Refer to our [Performance Guide](docs/performance.md) for optimization strategies.
-
----
+- [Architecture Overview](docs/architecture.md)
+- [API Documentation](docs/api.md)
+- [Accessibility Guidelines](docs/accessibility.md)
+- [Contributing Guide](CONTRIBUTING.md)
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md).
 
-### Development Setup
+### Quick Start for Contributors
 
 1. Fork the repository
 2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
+3. Make your changes following our coding standards
+4. Add tests for new functionality
+5. Run the full test suite
+6. Submit a pull request
 
-### Code of Conduct
+## 🔒 Security
 
-Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
-
----
-
-## 🆘 Support
-
-### Community Support
-
-- **GitHub Issues**: [Report bugs or request features](https://github.com/tiation/dnddiceroller-android/issues)
-- **Discussions**: [Join community discussions](https://github.com/tiation/dnddiceroller-android/discussions)
-- **Documentation**: [Browse our documentation](https://tiation.github.io/dnddiceroller-android)
-
-### Enterprise Support
-
-For enterprise customers, we offer:
-- Priority support
-- Custom development
-- Training and consultation
-- SLA guarantees
-
-Contact us at [tiatheone@protonmail.com](mailto:tiatheone@protonmail.com)
-
----
-
-## 🔮 Tiation Ecosystem
-
-This repository is part of the Tiation ecosystem. Explore related projects:
-
-- [🌟 Tiation Platform](https://github.com/tiation/tiation-ai-platform) - Enterprise AI platform
-- [🤖 AI Agents](https://github.com/tiation/tiation-ai-agents) - Intelligent automation
-- [⚡ Terminal Workflows](https://github.com/tiation/tiation-terminal-workflows) - Developer tools
-- [🐳 Docker Solutions](https://github.com/tiation/tiation-docker-debian) - Container orchestration
-- [📝 CMS](https://github.com/tiation/tiation-cms) - Content management system
-- [🐰 ChaseWhiteRabbit NGO](https://github.com/tiation/tiation-chase-white-rabbit-ngo) - Social impact initiatives
-- [🏗️ Infrastructure](https://github.com/tiation/tiation-rigger-infrastructure) - Enterprise infrastructure
-
----
+For security vulnerabilities, please email security@tiation.net rather than opening a public issue.
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 🌟 Tiation Ecosystem
+
+This project is part of the **Tiation ecosystem** of applications focused on creating accessible, high-quality software solutions. Connect with our other projects and tools designed to enhance user experiences across various platforms.
+
+### Related Projects
+
+- **ChaseWhiteRabbit NGO**: Social impact initiatives through technology
+- **Development Tools**: Shared libraries and utilities
+- **Enterprise Solutions**: Business-focused applications
+
+## 👥 Team
+
+**Built by:**
+- **Garrett Dillman** - Lead Developer  
+  - Email: garrett.dillman@gmail.com  
+  - GitHub: garrett@sxc.codes
+
+- **Tia** - Developer & Project Coordinator  
+  - Email: tiatheone@protonmail.com  
+  - Organization: ChaseWhiteRabbit NGO
+
+## 📞 Support
+
+- **Email**: support@tiation.net
+- **Issues**: [GitHub Issues](https://github.com/tiation/dnddiceroller-android/issues)
+- **Documentation**: [Project Wiki](https://github.com/tiation/dnddiceroller-android/wiki)
+
 ---
 
-## 🌟 About Tiation
-
-**Tiation** is a leading provider of enterprise-grade software solutions, specializing in automation, productivity, and system integration tools. Our mission is to empower organizations with cutting-edge technology that drives efficiency and innovation.
-
-### Our Solutions
-
-- **Automation Platform**: Comprehensive business process automation
-- **Developer Tools**: Professional development and deployment tools
-- **Enterprise Integration**: Seamless system integration solutions
-- **Security Framework**: Advanced security and compliance tools
-
-### Connect With Us
-
-- **Website**: [https://github.com/tiation](https://github.com/tiation)
-- **GitHub**: [https://github.com/tiation](https://github.com/tiation)
-- **LinkedIn**: [Tiation Company](https://linkedin.com/company/tiation)
-- **Twitter**: [@TiationTech](https://twitter.com/TiationTech)
-
----
-
-<div align="center">
-  <p>
-    <strong>Built with ❤️ by the Tiation Team</strong>
-  </p>
-  <p>
-    <a href="https://github.com/tiation">
-      <img src="https://img.shields.io/badge/Powered%20by-Tiation-cyan.svg" alt="Powered by Tiation">
-    </a>
-  </p>
-</div>
+*Building accessible, enterprise-grade solutions for the D&D community.*

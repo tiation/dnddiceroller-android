@@ -1,0 +1,56 @@
+{
+  "name": "dnddiceroller-android",
+  "version": "1.0.0",
+  "description": "DnD Dice Roller Android App - Enterprise-grade dice rolling application",
+  "private": true,
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "./gradlew detektAll ktlintCheckAll spotlessCheckAll",
+    "lint:fix": "./gradlew detektAll ktlintFormat spotlessApply",
+    "quality-check": "./gradlew qualityCheck",
+    "test": "./gradlew testDebugUnitTest",
+    "build": "./gradlew assembleDebug"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0"
+  },
+  "lint-staged": {
+    "*.kt": [
+      "./gradlew ktlintFormat",
+      "./gradlew spotlessApply",
+      "git add"
+    ],
+    "*.gradle.kts": [
+      "./gradlew spotlessApply",
+      "git add"
+    ],
+    "*.{md,json}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && ./gradlew qualityCheck",
+      "pre-push": "./gradlew test"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/dnddiceroller-android.git"
+  },
+  "keywords": [
+    "android",
+    "kotlin",
+    "compose",
+    "dice-roller",
+    "dnd",
+    "enterprise"
+  ],
+  "authors": [
+    "Garrett Dillman <garrett.dillman@gmail.com>",
+    "Tia <tiatheone@protonmail.com>"
+  ],
+  "license": "MIT"
+}
