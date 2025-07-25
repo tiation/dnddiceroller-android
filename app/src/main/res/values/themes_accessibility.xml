@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base Accessibility Theme -->
+    <style name="Theme.DungeonMaster.Accessibility" parent="Theme.MaterialComponents.DayNight">
+        <!-- High Contrast Colors -->
+        <item name="colorPrimary">@color/high_contrast_primary</item>
+        <item name="colorPrimaryVariant">@color/high_contrast_primary_variant</item>
+        <item name="colorOnPrimary">@color/high_contrast_on_primary</item>
+        
+        <item name="colorSecondary">@color/high_contrast_secondary</item>
+        <item name="colorSecondaryVariant">@color/high_contrast_secondary_variant</item>
+        <item name="colorOnSecondary">@color/high_contrast_on_secondary</item>
+        
+        <item name="android:colorBackground">@color/high_contrast_background</item>
+        <item name="colorOnBackground">@color/high_contrast_on_background</item>
+        
+        <!-- Text Scaling -->
+        <item name="android:textAppearanceHeadline1">@style/TextAppearance.DungeonMaster.Headline1.Accessibility</item>
+        <item name="android:textAppearanceHeadline2">@style/TextAppearance.DungeonMaster.Headline2.Accessibility</item>
+        <item name="android:textAppearanceBody1">@style/TextAppearance.DungeonMaster.Body1.Accessibility</item>
+        <item name="android:textAppearanceBody2">@style/TextAppearance.DungeonMaster.Body2.Accessibility</item>
+        
+        <!-- Touch Target Sizes -->
+        <item name="minTouchTargetSize">48dp</item>
+    </style>
+
+    <!-- Text Appearances -->
+    <style name="TextAppearance.DungeonMaster.Headline1.Accessibility" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="android:textSize">32sp</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+    </style>
+
+    <style name="TextAppearance.DungeonMaster.Headline2.Accessibility" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+    </style>
+
+    <style name="TextAppearance.DungeonMaster.Body1.Accessibility" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
+    </style>
+
+    <style name="TextAppearance.DungeonMaster.Body2.Accessibility" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
+    </style>
+</resources>

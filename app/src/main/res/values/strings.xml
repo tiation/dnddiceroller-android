@@ -1,4 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">D&amp;D Dice Roller</string>
+    <!-- App Title -->
+    <string name="app_name">Dungeon Master: Weaver of Fates</string>
+    <string name="cd_app_title">Welcome to Dungeon Master: Weaver of Fates, the ultimate RPG companion.</string>
+
+    <!-- Character Selector -->
+    <string name="cd_character_selector">Select your character. Current selection: Non-character.</string>
+
+    <!-- Dice Options -->
+    <string name="cd_dice_options">Select your dice type. Currently selected: d6.</string>
+    <string name="cd_d4_die">Select d4 die.</string>
+    <string name="cd_d6_die">Select d6 die.</string>
+    <string name="cd_d8_die">Select d8 die.</string>
+    <string name="cd_d10_die">Select d10 die.</string>
+    <string name="cd_d12_die">Select d12 die.</string>
+
+    <!-- Modifier Controls -->
+    <string name="cd_decrease_modifier">Decrease power modifier.</string>
+    <string name="cd_increase_modifier">Increase power modifier.</string>
+    <string name="cd_current_modifier">Current modifier: %1$d.</string>
+
+    <!-- Roll Button -->
+    <string name="roll_dice">Roll the dice</string>
+    <string name="cd_roll_dice">Press to roll the dice with current settings.</string>
+
+    <!-- Bottom Navigation -->
+    <string name="cd_dungeon_master_tab">Dungeon Master tab</string>
+    <string name="cd_chronicle_tab">Chronicle tab, view roll history</string>
+    <string name="cd_general_dice_tab">General dice tab, basic dice rolling</string>
+
+    <!-- Chronicle of Rolls -->
+    <string name="cd_chronicle_button">Access Chronicle of Rolls, showing last eight dice results.</string>
+    <string name="cd_roll_result">Rolled a %1$d on %2$s with modifier %3$d, total: %4$d</string>
+
+    <!-- Accessibility Settings -->
+    <string name="cd_help_section_title">Accessibility help section</string>
+    <string name="cd_help_content">Learn about accessibility features available in the app</string>
+    <string name="cd_voice_control_button">Configure voice control settings</string>
+    <string name="cd_font_size_changed">Font size changed to %1$d percent</string>
+    
+    <!-- Help Text -->
+    <string name="accessibility_help_text">Welcome to the Dungeon Master accessibility guide!
+
+This app supports:
+• TalkBack screen reader
+• High contrast mode for better visibility
+• Customizable text size
+• Voice commands for dice rolling
+• Gesture alternatives for all actions
+
+For TalkBack users:
+• Swipe right to move to the next item
+• Double-tap to activate buttons
+• Three-finger swipe to scroll
+
+Voice Commands:
+• Say "roll dice" to roll
+• Say "increase modifier" or "decrease modifier"
+• Say "switch dice" to change dice type
+
+Need help? Contact us at tiatheone@protonmail.com</string>
 </resources>
