@@ -1,5 +1,7 @@
 package com.tiation.dnddiceroller.features.general
 
+// Temporarily commented out until dependencies are available
+/*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chasewhiterabbit.dicengine.domain.engine.DiceEngine
@@ -47,3 +49,4 @@ class GeneralDiceRollerViewModel @Inject constructor(
         }
     }
 }
+*/

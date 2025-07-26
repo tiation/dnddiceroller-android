@@ -1,5 +1,7 @@
 package com.tiation.dnddiceroller
 
+// Temporarily commented out until dependencies are available
+/*
 import com.chasewhiterabbit.dicengine.data.repository.DiceRollRepository
 import javax.inject.Inject
 
@@ -18,3 +20,4 @@ class RollLogger @Inject constructor(
     suspend fun log(diceType: String, result: Int, modifier: Int = 0) = 
         repo.logRoll(diceType, result, modifier)
 }
+*/
